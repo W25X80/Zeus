@@ -2,7 +2,13 @@ package academy.kovalevskyi.zeus.engine.checkstyle;
 
 import academy.kovalevskyi.zeus.util.FileExplorer;
 import academy.kovalevskyi.zeus.util.FileType;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.List;
 
@@ -49,7 +55,7 @@ class CheckstyleProcessor {
   }
 
   private String captureProcessOutput(Process process) throws IOException {
-    ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
+    var outputStreamCaptor = new ByteArrayOutputStream();
     try (var reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
         var printStream = new PrintStream(outputStreamCaptor)) {
       String line;
