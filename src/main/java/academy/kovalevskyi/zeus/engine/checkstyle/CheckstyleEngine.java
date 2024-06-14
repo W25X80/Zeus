@@ -8,14 +8,34 @@ import java.util.List;
 import java.util.StringJoiner;
 import org.fusesource.jansi.Ansi;
 
+/**
+ * This class is responsible for running Checkstyle on Java source files. It provides methods to
+ * check individual files and lists of files.
+ */
 public final class CheckstyleEngine {
 
+  /**
+   * Runs Checkstyle on a single file using the specified style configuration.
+   *
+   * @param style the style configuration to use
+   * @param file the file to check
+   * @return the number of warnings found
+   * @throws IOException if an I/O error occurs
+   */
   public static int check(final Style style, final File file) throws IOException {
     final var warnings = new CheckstyleProcessor().process(style, file);
     displayResults(file.getName(), warnings);
     return warnings.size();
   }
 
+  /**
+   * Runs Checkstyle on a list of files using the specified style configuration.
+   *
+   * @param style the style configuration to use
+   * @param files the list of files to check
+   * @return the total number of warnings found across all files
+   * @throws IOException if an I/O error occurs
+   */
   public static int check(final Style style, final List<File> files) throws IOException {
     if (files.isEmpty()) {
       System.out.println(underline("You have nothing to verify with checkstyle!"));
