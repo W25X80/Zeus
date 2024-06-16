@@ -55,7 +55,7 @@ public final class CheckstyleEngine {
     return totalWarnings;
   }
 
-  private static void displayResults(String fileName, List<String> warnings) {
+  private static void displayResults(final String fileName, final List<String> warnings) {
     AnsiConsoleInstaller.INSTANCE.systemInstall();
     final var template = "%s%s%n";
     if (warnings.isEmpty()) {
@@ -68,7 +68,8 @@ public final class CheckstyleEngine {
     AnsiConsoleInstaller.INSTANCE.systemUninstall();
   }
 
-  private static void displayFooter(int files, int successful, int failed, int errors) {
+  private static void displayFooter(
+      final int files, final int successful, final int failed, final int errors) {
     if (errors > 0) {
       System.out.println(prepareFooter(files, successful, failed, errors));
     } else {
@@ -76,11 +77,11 @@ public final class CheckstyleEngine {
     }
   }
 
-  private static String prepareStatus(State state) {
+  private static String prepareStatus(final State state) {
     return String.format(" - %s", Ansi.ansi().fg(state.color).a(state.status).reset());
   }
 
-  private static String underline(String text) {
+  private static String underline(final String text) {
     return String.format("%s%n%s", text, "-".repeat(text.length()));
   }
 
@@ -97,7 +98,7 @@ public final class CheckstyleEngine {
     if (errors > 0) {
       result.add(String.format("ERRORS %d", errors));
     }
-    var bar = result.toString();
+    final var bar = result.toString();
     return String.format("%s%n%s", bar, "-".repeat(bar.trim().length()));
   }
 }

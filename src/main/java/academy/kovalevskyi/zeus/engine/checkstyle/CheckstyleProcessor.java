@@ -30,13 +30,13 @@ class CheckstyleProcessor {
    */
   public List<String> process(final Style style, final File file) throws IOException {
     validateFile(file);
-    Process process = startCheckstyleProcess(style, file);
-    String output = captureProcessOutput(process);
+    final Process process = startCheckstyleProcess(style, file);
+    final String output = captureProcessOutput(process);
     verifyProcessExitCode(process);
     return collectResult(output);
   }
 
-  private void validateFile(File file) throws IOException {
+  private void validateFile(final File file) throws IOException {
     if (!file.exists()) {
       throw new FileNotFoundException(String.format("%s is absent", file.getAbsolutePath()));
     }
@@ -48,8 +48,8 @@ class CheckstyleProcessor {
     }
   }
 
-  private Process startCheckstyleProcess(Style style, File file) throws IOException {
-    ProcessBuilder processBuilder =
+  private Process startCheckstyleProcess(final Style style, final File file) throws IOException {
+    var processBuilder =
         new ProcessBuilder(
             "java",
             "-Duser.language=en",
@@ -63,8 +63,8 @@ class CheckstyleProcessor {
     return processBuilder.start();
   }
 
-  private String captureProcessOutput(Process process) throws IOException {
-    var outputStreamCaptor = new ByteArrayOutputStream();
+  private String captureProcessOutput(final Process process) throws IOException {
+    final var outputStreamCaptor = new ByteArrayOutputStream();
     try (var reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
         var printStream = new PrintStream(outputStreamCaptor)) {
       String line;
@@ -75,9 +75,9 @@ class CheckstyleProcessor {
     return outputStreamCaptor.toString();
   }
 
-  private void verifyProcessExitCode(Process process) {
+  private void verifyProcessExitCode(final Process process) {
     try {
-      int exitCode = process.waitFor();
+      final var exitCode = process.waitFor();
       if (exitCode != 0) {
         throw new RuntimeException("Checkstyle process exited with code: " + exitCode);
       }
